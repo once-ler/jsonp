@@ -55,7 +55,7 @@ function jsonp(url, opts, fn){
   var target = document.getElementsByTagName('script')[0] || document.head;
   var script;
   var timer;
-
+  var onerror = opts.onerror || function(error_message) {}
 
   if (timeout) {
     timer = setTimeout(function(){
@@ -91,6 +91,7 @@ function jsonp(url, opts, fn){
   // create script
   script = document.createElement('script');
   script.src = url;
+  script.onerror = onerror('Connection refused: ' + url);
   target.parentNode.insertBefore(script, target);
 
   return cancel;
